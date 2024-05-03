@@ -1,28 +1,43 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 int main() {
-    int n, e;
-    cin >> n >> e;
-    
-    vector<vector<pair<int, int>>> adjList(n);
+    const int N = 6; 
+    int adjacencyMatrix[N][N] = {0}; 
 
-    int n1, n2, dis;
-    for (int i = 0; i < e; i++) {
-        cin >> n1 >> n2 >> dis;
-        adjList[n1].push_back({n2, dis});
-        adjList[n2].push_back({n1, dis});
-    }
     
-    int input;
-    cin >> input;
+    int edges[][3] = {{0, 1, 12},
+                      {0, 5, 25},
+                      {1, 2, 13},
+                      {1, 3, 15},
+                      {2, 4, 5},
+                      {2, 5, 2},
+                      {3, 5, 13},
+                      {4, 3, 5}};
+
     
-    int result = 0;
-    for (auto edge : adjList[input]) {
-        result += edge.second; // Sum the distances of edges
+    for (const auto& edge : edges) {
+        int node1 = edge[0];
+        int node2 = edge[1];
+        int distance = edge[2];
+        adjacencyMatrix[node1][node2] = distance;
+        adjacencyMatrix[node2][node1] = distance; 
     }
-    cout << result;
+
+    int inputNode;
+    cin >> inputNode;
+
+    
+    int sum = 0;
+    for (int i = 0; i < N; ++i) {
+        if (adjacencyMatrix[inputNode][i] != 0) {
+            sum += adjacencyMatrix[inputNode][i];
+        }
+    }
+
+    cout << sum << endl;
 
     return 0;
 }
